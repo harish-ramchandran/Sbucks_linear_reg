@@ -1,0 +1,41 @@
+"""
+=========================================================
+Linear Regression to predict number of starbucks based on per capita income in the Charlotte are (OLS method)
+
+=========================================================
+
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
+from scipy import stats
+import pandas as pd
+import statsmodels.api as sm
+
+loc = 'charlotte_zipcode_analysis.xlsx' #change location in github
+xl = pd.ExcelFile(loc)
+df = xl.parse('Charlotte')
+X= df.iloc[:,2]
+Y= df.iloc[:,3]
+#print X, Y
+
+
+#Using sm.OLS
+est = sm.OLS(Y,X)
+est = est.fit()
+print est.summary()
+
+Y_predict = est.predict(X);
+
+
+
+plt.figure()
+plt.scatter(X, Y,  color='red')
+plt.xlabel('Per capita income')
+plt.ylabel('No of starbucks')
+plt.title('Linear regression')
+plt.plot(X, Y_predict, color='blue',linewidth=3)
+
+plt.grid()
+plt.show()
